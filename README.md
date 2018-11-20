@@ -31,13 +31,19 @@ if You have 4.12 than chances are quite good that kernel update will work with n
     - #cp ../wdmc-gen2/armada-375-wdmc-gen2.dts arch/arm/boot/dts
 	
 * Now we are going to cross-compile the kernel
+	- First thing if You have another version than 4.12.9 is reusing old config:
 	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- oldconfig
+	- Now You might also want to modify some settings (but it's not required)
 	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
+	- Cross compiling the kernel:
 	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j4 zImage
+	- Create DTB file:
 	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- armada-375-wdmc-gen2.dtb
+	- Create uImage
 	- #cat arch/arm/boot/zImage arch/arm/boot/dts/armada-375-wdmc-gen2.dtb > zImage_and_dtb
 	- #mkimage -A arm -O linux -T kernel -C none -a 0x00008000 -e 0x00008000 -n 'WDMC-Gen2' -d zImage_and_dtb uImage
-* Next we are going to build modules in a local directory. We call it install_linux:
+	- #rm zImage_and_dtb
+* Next we are going to build modules in a local directory. We create a directory for this e.g. install_linux:
 	- #mkdir ~/install_linux
 	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=~/install_linux -j4 modules modules_install
 * Achive the modules in lib for better handling:
