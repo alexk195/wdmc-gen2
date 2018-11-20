@@ -4,7 +4,8 @@ WD My Cloud (Gen2) - wdmc-gen2 - Marvell ARMADA 375
 WD My Cloud  Gen2 (Kernel / Distribution / Information) drop
 
 This is a fork of repo https://github.com/Johns-Q/wdmc-gen2
-All credits go to the author if it.
+Previous work was done by Fox: https://fox-exe.ru/WDMyCloud/Other/Official_linux_kernel/
+All credits go to the authors if it.
 
 Here is my small updates to get kernel 4.12.9 running on wdmc gen2.
 The main change is adding USB sound support so that You can plug-in USB audio adapter
@@ -20,7 +21,7 @@ The whole procedure is based on Johns-Q description.
 	- probably You will need to install some more...
 * Clone this repo:
 	- #git clone https://github.com/alexk195/wdmc-gen2.git
-* Get the kernel sources. I used 4.12.9 which is compatible with root-fs I have used and 
+* Get the kernel sources. I used 4.12.9 which is compatible with root-fs I have used (jessie) and 
 if You have 4.12 than chances are quite good that kernel update will work with no probs.
 	- #wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.12.9.tar.gz
 	- Unpack them:
