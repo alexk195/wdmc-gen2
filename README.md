@@ -1,6 +1,54 @@
-# wdmc-gen2
+# wdmc-gen2 
+WD My Cloud (Gen2) - wdmc-gen2 - Marvell ARMADA 375
+===================================================
 WD My Cloud  Gen2 (Kernel / Distribution / Information) drop
 
+This is a fork of repo https://github.com/Johns-Q/wdmc-gen2
+All credits go to the author if it.
+
+Here is my small updates to get kernel 4.12.9 running on wdmc gen2.
+The main change is adding USB sound support so that You can plug-in USB audio adapter
+or headset and let wdmc play some mp3's. For this reason a modified .config file is provided
+and uImage and libs.tar are pre-built accordingly.
+
+I've used Windows WSL with Ubuntu Bash from Windows Store.
+The whole procedure is based on Johns-Q description.
+
+* Install packages for cross-compiling, You will need at least:
+	- #sudo apt-get install gcc-arm-linux-gnueabi
+    - #sudo apt install u-boot-tools
+	- probably You will need to install some more...
+* Clone this repo:
+	- #git clone https://github.com/alexk195/wdmc-gen2.git
+* Get the kernel sources. I used 4.12.9 which is compatible with root-fs I have used and 
+if You have 4.12 than chances are quite good that kernel update will work with no probs.
+	- #wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.12.9.tar.gz
+	- Unpack them:
+	- #tar -xzf linux-4.12.9.tar.gz
+	- Copy the config and dts files:
+    - #cp wdmc-gen2/kernel-4.12.9.config linux-4.12.9/.config
+    - #cd linux-4.12.9/
+    - #cp ../wdmc-gen2/armada-375-wdmc-gen2.dts arch/arm/boot/dts
+	
+* Now we are going to cross-compile the kernel
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- oldconfig
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j4 zImage
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- armada-375-wdmc-gen2.dtb
+	- #cat arch/arm/boot/zImage arch/arm/boot/dts/armada-375-wdmc-gen2.dtb > zImage_and_dtb
+	- #mkimage -A arm -O linux -T kernel -C none -a 0x00008000 -e 0x00008000 -n 'WDMC-Gen2' -d zImage_and_dtb uImage
+* Next we are going to build modules in a local directory. We call it install_linux:
+	- #mkdir ~/install_linux
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=~/install_linux -j4 modules modules_install
+* Achive the modules in lib for better handling:
+	- #cd ~/install_linux/
+	- #tar -cf lib.tar lib
+* Next step is copying lib.tar and uImage to WDMC. The uImage goes to /boot and modules in lib.tar go to /lib/modules.
+  You should untar the lib.tar so that folder 4.12.9 is on WDMC's location /lib/modules/4.12.9.
+  If You have WDMC with 4.12 running just copy the uImage and untar lib.tar. For fresh system follow instructions from Johns-Q below.
+  In the repo You will find the uImage-4.12.9 and modules-4.12.9.tar.gz pre-built.
+  
+Original Information from Johns-Q:
 
 WD My Cloud (Gen2) - wdmc-gen2 - Marvell ARMADA 375
 ===================================================
