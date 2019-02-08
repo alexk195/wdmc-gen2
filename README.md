@@ -46,7 +46,8 @@ if You have 4.12 than chances are quite good that kernel update will work with n
 	- #rm zImage_and_dtb
 * Next we are going to build modules in a local directory. We create a directory for this e.g. install_linux:
 	- #mkdir ~/install_linux
-	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=~/install_linux -j4 modules modules_install
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=~/install_linux -j4 modules
+	- #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- INSTALL_MOD_PATH=~/install_linux -j4 modules_install
 * Achive the modules in lib for better handling:
 	- #cd ~/install_linux/
 	- #tar -cf lib.tar lib
