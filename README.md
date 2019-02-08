@@ -52,6 +52,7 @@ if You have 4.12 than chances are quite good that kernel update will work with n
 	- #tar -cf lib.tar lib
 * Next step is copying lib.tar and uImage to WDMC. The uImage goes to /boot and modules in lib.tar go to /lib/modules.
   You should untar the lib.tar so that folder 4.12.9 is on WDMC's location /lib/modules/4.12.9.
+	- #tar -xf lib.tar
   If You have WDMC with 4.12 running just copy the uImage and untar lib.tar. For fresh system follow instructions from Johns-Q below.
   In the repo You will find the uImage-4.12.9 and modules-4.12.9.tar.gz pre-built.
   
